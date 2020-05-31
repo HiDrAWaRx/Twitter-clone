@@ -33,7 +33,21 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <div class="alert fixed-top w-100">
+                    <span>{{ error }}</span>
+                </div>
+            {% endfor %}
+        {% endfor %}
     </form>
 
-
+    <script>
+        setTimeout(function () {
+            for (let element of document.getElementsByClassName("alert")) {
+                element.style.display = "none";
+            }
+        }, 2000);
+    </script>
 {% endblock %}
