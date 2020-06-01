@@ -16,7 +16,6 @@
 {% block body %}
     {% if messages %}
         <div class="position-absolute w-100">
-            <strong>Messages:</strong>
             <ul>
                 {% for message in messages %}
                     <div class="alert fixed-top w-100" style="background-color: #81c784">
@@ -32,6 +31,13 @@
 {% block extra_body %}
 {% endblock %}
 </body>
+ <script>
+        setTimeout(function () {
+            for (let element of document.getElementsByClassName("alert")) {
+                element.style.display = "none";
+            }
+        }, 2000);
+    </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

@@ -73,6 +73,7 @@ body {
 .avatar {
     height: 10em;
     width: 10em;
+    margin-bottom: 1em;
 }
 
 .right-container {

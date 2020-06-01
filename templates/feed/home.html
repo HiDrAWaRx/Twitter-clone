@@ -23,7 +23,7 @@
                     <a class="nav-link" href="#">Settings</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
                 </li>
             </ul>
         </div>
@@ -34,9 +34,9 @@
                 <i class="fab fa-twitter logo"></i><br>
                 <div class="wraper"><input class="search_bar" placeholder="Search"> <i class="fas fa-search"></i></div>
                 <div class="profile">
-                    <img src="{% static 'user.png' %}" class="avatar">
-                    <h5>Username</h5>
-                    <h5 style="color: #adadad">mail@email.com</h5>
+                    <img src="{% get_media_prefix%}{{ user_avatar }}" class="avatar">
+                    <h5>{{ user.username|capfirst }}</h5>
+                    <h5 style="color: #adadad">{{ user.email|capfirst|lower }}</h5>
                 </div>
             </div>
             <div class="col-7 right-container">
