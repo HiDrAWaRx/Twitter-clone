@@ -31,16 +31,20 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        {% for error in form.non_field_errors %}
-            <div class="fixed-top w-100" id="alert">
-                <p>{{ error }}</p>
-            </div>
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <div class="alert fixed-top w-100">
+                    <span>{{ error }}</span>
+                </div>
+            {% endfor %}
         {% endfor %}
     </form>
 
     <script>
         setTimeout(function () {
-            document.getElementById('alert').style.display = 'none';
-        }, 2500);
+            for (let element of document.getElementsByClassName("alert")) {
+                element.style.display = "none";
+            }
+        }, 2000);
     </script>
 {% endblock %}

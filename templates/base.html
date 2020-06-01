@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/cyborg/bootstrap.min.css">
+{#    <link rel="stylesheet" href="{% static 'style.css' %}">#}
     {% block extra_head %}
     {% endblock %}
 
@@ -17,7 +19,9 @@
             <strong>Messages:</strong>
             <ul>
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                    <div class="alert fixed-top w-100" style="background-color: #81c784">
+                    <span>{{ message }}</span>
+                </div>
                 {% endfor %}
             </ul>
         </div>

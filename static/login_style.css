@@ -10,10 +10,7 @@ body {
     align-items: center;
     padding-top: 40px;
     padding-bottom: 40px;
-    /*background-image: url("background4.jpg");*/
     background-color: #222;
-    background-position: bottom;
-    background-size: cover;
 }
 
 .form-signin {

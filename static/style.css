@@ -1,0 +1,71 @@
+html,
+body {
+    height: 100%;
+    background-color: #222;
+}
+
+.navbar a {
+    color: #aaaaaa !important;
+}
+
+.navbar {
+    padding-left: 10rem;
+    padding-right: 10rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #444444 !important;
+}
+
+.left-container {
+    border-right: 1px solid whitesmoke;
+    margin-top: 2em;
+}
+
+.logo {
+    font-size: 6em;
+    color: #03a9f4;
+    margin-bottom: 0.3em;
+}
+
+.wraper {
+    clear: both;
+    display: inline-block;
+}
+
+.search_bar {
+    width: 23em;
+    height: 3em;
+    border: none;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    border-radius: 9999px 0px 0px 9999px;
+    background-color: #666666;
+    display: block;
+    float: left;
+}
+
+.fa-search {
+    width: 1em;
+    background-color: #666666;
+    height: 3em;
+    padding: 1em 2em 1em 1em;
+    border-radius: 0px 9999px 9999px 0px;
+    color: #d0d0d0;
+}
+
+.profile {
+    background-color: #666666;
+    border-radius: 25px;
+    margin: 3em;
+    padding: 1.5em;
+}
+
+.avatar {
+    height: 10em;
+    width: 10em;
+}
+
+.right_container {
+
+}
