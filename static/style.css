@@ -4,12 +4,15 @@ body {
     background-color: #222;
 }
 
+.container-fluid {
+}
+
 .navbar a {
     color: #aaaaaa !important;
 }
 
 .navbar {
-    padding-left: 10rem;
+    padding-left: 13.5rem;
     padding-right: 10rem;
     font-size: 1.2rem;
     border-bottom: 1px solid #444444 !important;
@@ -18,6 +21,7 @@ body {
 .left-container {
     border-right: 1px solid whitesmoke;
     margin-top: 2em;
+    padding-left: 3em;
 }
 
 .logo {
@@ -43,6 +47,11 @@ body {
     background-color: #666666;
     display: block;
     float: left;
+    color: #d0d0d0;
+}
+
+::placeholder {
+    color: #d0d0d0;
 }
 
 .fa-search {
@@ -66,6 +75,39 @@ body {
     width: 10em;
 }
 
-.right_container {
+.right-container {
+    margin-top: 2em;
+    text-align: left;
+    padding-left: 5em;
+    padding-right: 2em;
+}
 
+.tweet {
+    text-align: left;
+    margin-top: 3em;
+}
+
+.title {
+    border-bottom: 1px solid white;
+    padding-bottom: 0.8em;
+}
+
+.title span {
+    display: inline-block;
+    margin-left: 0.3em;
+    font-size: 2em;
+}
+
+.small-avatar {
+    display: inline-block;
+    float: left;
+    height: 3em;
+    width: 3em;
+}
+.content{
+    margin-top: 0.4em;
+    font-size: 1.3em;
+}
+.footer{
+    margin-top: 0.5em;
 }

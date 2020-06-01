@@ -23,3 +23,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content[:20]
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, primary_key=True, verbose_name='user', related_name='profile', on_delete=models.CASCADE)
+    avatar_url = models.ImageField(null=True)
+
