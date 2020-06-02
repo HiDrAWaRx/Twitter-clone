@@ -157,10 +157,11 @@ body {
 .new_comment{
     margin-left: 2.5em;
 }
-a .tweet {
+a .content , a .footer{
     color: #d0d0d0;
 }
 
 a:hover {
     text-decoration: none;
+    color: #2A9FD6;
 }

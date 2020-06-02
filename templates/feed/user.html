@@ -30,21 +30,12 @@
             {% include 'feed/left_site.html' %}
             <div class="col-7 right-container">
                 <h3>Tweets</h3>
-                <div class="new_tweet">
-                    <form method="POST" action="{% url 'add_tweet' %}">
-                        {% csrf_token %}
-                        <textarea name="content" class="new_tweet_content"></textarea><br>
-                        <button class="new_tweet_submit" type="submit">Submit</button>
-                    </form>
-                </div>
                 {% for tweet in tweets %}
-                    <div class="tweet">
-                        <a href="{% url 'user_view' tweet.author.username %}">
+                    <a href="{{ tweet.url }}">
+                        <div class="tweet">
                             <div class="title"><img src="{% static 'user2.png' %}" class="small-avatar">
                                 <span>{{ tweet.author.username }}</span>
                             </div>
-                        </a>
-                        <a href="{% url 'post_view' tweet.pk %}">
                             <div class="content">
                                 <span>{{ tweet.content }} </span>
                             </div>
@@ -52,7 +43,7 @@
                                 <span>{{ tweet.number_of_comments }} comments(s)</span>
                                 <span style="float:right">{{ tweet.add_date }}</span>
                             </div>
-                    </div>
+                        </div>
                     </a>
                 {% endfor %}
                 <div class="pagination">

@@ -16,7 +16,7 @@ class Post(models.Model):
 
     @property
     def url(self):
-        return f"/{self.author.username}/{self.pk}/"
+        return f"/tweet/{self.pk}/"
 
 
 class Comment(models.Model):

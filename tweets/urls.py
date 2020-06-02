@@ -1,8 +1,17 @@
-from django.urls import path, include
-from .views import home,add_tweet, post_view, add_comment
+from django.urls import path
+
+from .views import (
+    add_tweet,
+    add_comment,
+
+    home,
+    post_view,
+    user_view)
+
 urlpatterns = [
-    path('', home, name='home_view'),
     path('post/add/', add_tweet, name='add_tweet'),
     path('comment/add/', add_comment, name='add_comment'),
-    path('<user>/<pk>/', post_view, name='post_view'),
+    path('', home, name='home_view'),
+    path('tweet/<pk>/', post_view, name='post_view'),
+    path('user/<user>/', user_view, name='user_view'),
 ]
