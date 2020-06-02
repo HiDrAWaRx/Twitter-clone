@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Home{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock %}
+{% block content %}
+    {% include 'feed/menu.html' %}
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'feed/left_site.html' %}
+            <div class="col-7 right-container">
+                <h3>Settings</h3>
+                  <form method="POST" action="{% url 'search' %}">
+                      <input name="username" value="{{ user_info.username }}"><br>
+                      <input name="email" value="{{ user_info.email }}">
+                      <p>Image</p>
+                      <p>Currently: {{ user_info.profile.avatar }}</p>
+                      <input type="file" name="avatar"><br>
+                      <button>Change data</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

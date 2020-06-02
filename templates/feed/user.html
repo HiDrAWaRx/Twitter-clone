@@ -6,36 +6,19 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 {% endblock %}
 {% block content %}
-    <nav class="navbar navbar-expand-md">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-            </ul>
-        </div>
-        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Settings</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account_logout' %}">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    {% include 'feed/menu.html' %}
     <div class="container-fluid">
         <div class="row">
             {% include 'feed/left_site.html' %}
             <div class="col-7 right-container">
                 <h3>Tweets</h3>
                 {% for tweet in tweets %}
-                    <a href="{{ tweet.url }}">
+                    <a href="{% url 'user_view' tweet.author.username %}">
                         <div class="tweet">
                             <div class="title"><img src="{% static 'user2.png' %}" class="small-avatar">
                                 <span>{{ tweet.author.username }}</span>
-                            </div>
+                            </div> </a>
+                                    <a href="{{ tweet.url }}">
                             <div class="content">
                                 <span>{{ tweet.content }} </span>
                             </div>

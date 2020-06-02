@@ -54,13 +54,14 @@ body {
     color: #d0d0d0;
 }
 
-.fa-search {
+.search {
     width: 1em;
     background-color: #666666;
     height: 3em;
     padding: 1em 2em 1em 1em;
     border-radius: 0px 9999px 9999px 0px;
     color: #d0d0d0;
+    border: none;
 }
 
 .profile {
@@ -164,4 +165,37 @@ a .content , a .footer{
 a:hover {
     text-decoration: none;
     color: #2A9FD6;
+}
+.follow{
+    color: #d0d0d0;
+    background-color: #03a9f4;
+    border: none;
+    padding: 1em 2em 1em 2em;
+    border-radius: 25px;
+    margin-top: 1em;
+    font-size: 1.2em;
+}
+.follow-clicked{
+    color: #03a9f4;
+    background-color: #d0d0d0;
+    border: 0.2em solid #03a9f4;
+    padding: 1em 2em 1em 2em;
+    border-radius: 25px;
+    margin-top: 1em;
+    font-size: 1.2em;
+}
+.result{
+    margin-top: 1em;
+}
+
+.result .title span {
+    display: inline-block;
+    margin-left: 0.3em;
+    font-size: 4em;
+}
+.result .small-avatar {
+    display: inline-block;
+    float: left;
+    height: 6em;
+    width: 6em;
 }
