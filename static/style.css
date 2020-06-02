@@ -105,10 +105,62 @@ body {
     height: 3em;
     width: 3em;
 }
-.content{
+
+.content {
     margin-top: 0.4em;
     font-size: 1.3em;
 }
-.footer{
+
+.footer {
     margin-top: 0.5em;
+}
+
+.step-links {
+    margin-top: 2em;
+}
+
+.new_tweet_content {
+    background-color: #666666;
+    width: 100%;
+    padding: 1em;
+    height: 6em;
+    border-radius: 25px;
+    color: #d0d0d0;
+    resize: none;
+    font-size: 1.4em;
+}
+
+.new_tweet_submit {
+    float: right;
+    color: #d0d0d0;
+    background-color: #03a9f4;
+    border: none;
+    padding: 0.5em 1.5em 0.5em 1.5em;
+    border-radius: 25px;
+}
+.comment{
+    margin-top: 1em;
+    margin-left: 3em;
+}
+
+.comment .title span {
+    display: inline-block;
+    margin-left: 0.3em;
+    font-size: 1.5em;
+}
+.comment .small-avatar {
+    display: inline-block;
+    float: left;
+    height: 2em;
+    width: 2em;
+}
+.new_comment{
+    margin-left: 2.5em;
+}
+a .tweet {
+    color: #d0d0d0;
+}
+
+a:hover {
+    text-decoration: none;
 }

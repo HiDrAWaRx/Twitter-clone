@@ -14,6 +14,10 @@ class Post(models.Model):
     def number_of_comments(self):
         return Comment.objects.filter(post=self).count()
 
+    @property
+    def url(self):
+        return f"/{self.author.username}/{self.pk}/"
+
 
 class Comment(models.Model):
     content = models.TextField(max_length=280)

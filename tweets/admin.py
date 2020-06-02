@@ -14,7 +14,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'author', 'add_date')
-    readonly_fields = ('add_date', 'post', 'author')
+    readonly_fields = ('add_date',)
 
 
 @admin.register(UserProfile)
