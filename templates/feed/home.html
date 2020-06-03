@@ -22,7 +22,7 @@
                 {% for tweet in tweets %}
                     <div class="tweet">
                         <a href="{% url 'user_view' tweet.author.username %}">
-                            <div class="title"><img src="{% get_media_prefix %}{{ user_profile.avatar }}" class="small-avatar">
+                            <div class="title"><img src="{% get_media_prefix %}{{ tweet.author.profile.avatar }}" class="small-avatar">
                                 <span>{{ tweet.author.username }}</span>
                             </div>
                         </a>
