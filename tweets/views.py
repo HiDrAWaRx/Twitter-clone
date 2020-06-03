@@ -59,6 +59,20 @@ def user_view(request, user):
 def settings_view(request):
     user = request.user
 
+    if request.method == "POST":
+        if user.username != request.POST.get('username'):
+            if not len(User.objects.filter(username__exact=request.POST.get('username'))):
+                request.user.username = request.POST.get('username')
+
+        if user.email != request.POST.get('email'):
+            if not len(User.objects.filter(email__exact=request.POST.get('email'))):
+                request.user.email = request.POST.get('email')
+
+        if request.FILES:
+            UserProfile(avatar=request.FILES['avatar'], user=user).save()
+
+    user.profile.save()
+    user.save()
     context = {
         "user_info": user,
         "user_profile": UserProfile.objects.get(user=user),

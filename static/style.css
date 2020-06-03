@@ -139,7 +139,8 @@ body {
     padding: 0.5em 1.5em 0.5em 1.5em;
     border-radius: 25px;
 }
-.comment{
+
+.comment {
     margin-top: 1em;
     margin-left: 3em;
 }
@@ -149,16 +150,19 @@ body {
     margin-left: 0.3em;
     font-size: 1.5em;
 }
+
 .comment .small-avatar {
     display: inline-block;
     float: left;
     height: 2em;
     width: 2em;
 }
-.new_comment{
+
+.new_comment {
     margin-left: 2.5em;
 }
-a .content , a .footer{
+
+a .content, a .footer {
     color: #d0d0d0;
 }
 
@@ -166,7 +170,8 @@ a:hover {
     text-decoration: none;
     color: #2A9FD6;
 }
-.follow{
+
+.follow {
     color: #d0d0d0;
     background-color: #03a9f4;
     border: none;
@@ -175,7 +180,8 @@ a:hover {
     margin-top: 1em;
     font-size: 1.2em;
 }
-.follow-clicked{
+
+.follow-clicked {
     color: #03a9f4;
     background-color: #d0d0d0;
     border: 0.2em solid #03a9f4;
@@ -184,7 +190,8 @@ a:hover {
     margin-top: 1em;
     font-size: 1.2em;
 }
-.result{
+
+.result {
     margin-top: 1em;
 }
 
@@ -193,9 +200,24 @@ a:hover {
     margin-left: 0.3em;
     font-size: 4em;
 }
+
 .result .small-avatar {
     display: inline-block;
     float: left;
     height: 6em;
     width: 6em;
+}
+
+.settings-input {
+    width: 20em;
+    background-color: #666666;
+    height: 3em;
+    padding: 2em 2.5em 2em 2em;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-left: -1em;
+    border-radius: 50px;
+    color: #d0d0d0;
+    border: none;
 }
