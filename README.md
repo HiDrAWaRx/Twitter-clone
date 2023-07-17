@@ -42,6 +42,7 @@ https://github.com/initfve/Twitter-clone
 
 ##### api/v1/signup/
 Permite generar un nuevo registro de usuario para el sistema.
+```
 Payload:
 {
     "username": "prueba1",
@@ -50,6 +51,7 @@ Payload:
     "first_name": "pruebanombre",
     "last_name": "pruebaapellido"
 }
+```
 - Tanto el parámetro "username" como "email" se consideran como valores únicos, por lo que al intentar registrar más de una vez el mismo valor, indicará error de la base de datos.
 
 
