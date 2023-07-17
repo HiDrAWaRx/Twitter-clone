@@ -30,10 +30,11 @@ https://github.com/initfve/Twitter-clone
 
 ### Levantar el proyecto
 - Para levantar el proyecto se debe contar con el servicio de MongoDB corriendo en la pc.
-- Se debe levantar el entorno virtual:
+- Se debe levantar el entorno virtual
+    - (En Windows)
     1. Ir a la carpeta del proyecto y abrir la consola en dicho directorio
     2. Ejecutar la siguiente instrucción: 'venv\Scripts\activate.bat' para correr el entorno virtual
-- Una vez corriendo en el entorno virtual, se deben ejecutar los siguientes comandos, en la misma consola, en orden para levantar el proyecto:
+- Una vez corriendo en el entorno virtual, se deben ejecutar los siguientes comandos, en la misma consola, en orden para levantar el proyecto
     1. 'pip manage.py makemigrations'
     2. 'pip manage.py migrate'
     3. 'pip manage.py runserver'
