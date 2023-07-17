@@ -57,50 +57,62 @@ Payload:
 
 ##### api/v1/login/
 Permite generar el token de autenticación (JWT) en base a las credenciales de un usuario registrado en el sistema.
+```
 Payload:
 {
     "username": "prueba1",
     "password": "patito2",
 }
+```
 
 ##### >> Los siguientes endpoints necesitan el token JWT para la autenticación del usuario, obtenible en el anterior endpoint, login. El debe estar definido como Bearer Token en el encabezado de la petición. <<
 
 ##### api/v1/post/
 - (GET) Permite listar la colección de post del sistema bajo el método HTTP "GET"
 - (POST) Permite generar un registro nuevo en la colección de post del sistema bajo el método HTTP "POST". Cada post nuevo tiene un id numérico autoincremental para identificarlo:
+```
 Payload:
 {
     "author": "prueba1",
     "content": "siento incertidumbre por la inseguridad, pero siempre alegre siempre positivo"
 }
+```
 
 ##### api/v1/emoji-post-count/
 Permite conocer la cantidad de emojis que se encuentran en un post específico, identificado por su id numérico.
+```
 Payload:
 {
     "post_id": 1
 }
+```
 
 ##### api/v1/word-post-count/
 Permite conocer la cantidad de palabras de más de 5 caracteres que haya en un post específico, identificado por su id numérico.
+```
 Payload:
 {
     "post_id": 1
 }
+```
 
 ##### api/v1/word-sentiment-post-count/
 Permite conocer la cantidad de sentimientos, definidos en un diccionario local, y la cantidad de palabras relacionadas a cada sentimiento que haya en un post específico, identificado por su id numérico.
+```
 Payload:
 {
     "post_id": 1
 }
+```
 
 Diccionario de sentimientos con palabras relacionadas a cada uno:
+```
 sentiment_words = {
     'enojo': ['enojo', 'rabia', 'frustración', 'frustrado'],
     'alegría': ['alegría', 'alegre', 'felicidad', 'entusiasmo'],
     'duda': ['miedo', 'incertidumbre', 'preocupación', 'inseguridad']
 }
+```
  
 ### TODO
 - [ ] Indicar con mayor precisión cuál es el problema que desencadenó el error.
