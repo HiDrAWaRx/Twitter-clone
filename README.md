@@ -40,6 +40,8 @@ https://github.com/initfve/Twitter-clone
     3. 'pip manage.py runserver'
 
 ### Endpoints
+Los siguientes endpoints fueron probados con la aplicación POSTMAN, luego de levantar el proyecto en python con su entorno virtual.
+Estos endpoints se encuentran en el archivo 'Tweets-clone.postman_collection.json' en la raiz del proyecto, para importar.
 
 ##### api/v1/signup/
 Permite generar un nuevo registro de usuario para el sistema.
