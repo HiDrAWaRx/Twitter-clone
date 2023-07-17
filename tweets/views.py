@@ -1,127 +1,150 @@
-# def home(request):
-#     return HttpResponse("Home page " + str(request.user))
-from allauth.account.signals import user_signed_up
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.core.paginator import Paginator
-from django.dispatch import receiver
-from django.shortcuts import render, redirect
+from rest_framework import viewsets
 
-from tweets.models import UserProfile, Post, Comment, Follow
+from rest_framework.response import Response
+
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import action
+
+from .renderers import DefaultRenderer
+
+from .serializers import PostSerializer, UserSerializer, CommentSerializer
+from tweets.models import Post, User, Comment
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
+import re
+from rest_framework.views import APIView
+
+class EmojiCountView(APIView):
+    renderer_classes = (DefaultRenderer,)
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        post_id = request.data.get('post_id')
+        if post_id:
+            try:
+                post = Post.objects.get(id=post_id)
+                emoji_count = count_emojis(post.content)
+                return Response({'emoji_count': emoji_count, 'post_content': post.content})
+            except Post.DoesNotExist:
+                return Response({'ErrorDetail': 'Post not found'}, status=404)
+        return Response({'ErrorDetail': 'Invalid request'}, status=400)
 
 
-@login_required(redirect_field_name='account_login')
-def home(request):
-    tweets = Post.objects.filter(
-        author__follow_user__user=request.user) | Post.objects.filter(author=request.user).order_by('-add_date')
+def count_emojis(text):
+    emoji_regex = r'[\U0001F300-\U0001F5FF\U0001F600-\U0001F64F\U0001F680-\U0001F6FF\U00002600-\U000026FF\U00002700-\U000027BF\U0000FE00-\U0000FE0F\U0001F900-\U0001F9FF\U0001F1E6-\U0001F1FF]'
+    emojis = re.findall(emoji_regex, text)
+    emoji_count = len(emojis)
+    return emoji_count
 
-    paginator = Paginator(tweets, 3)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+class WordWithMoreThan5CharsCountView(APIView):
+    renderer_classes = (DefaultRenderer,)
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    context = {
-        "user_info": request.user,
-        "user_profile": UserProfile.objects.get(user=request.user),
-        "tweets": page_obj,
+    def post(self, request):
+        post_id = request.data.get('post_id')
+        if post_id:
+            try:
+                post = Post.objects.get(id=post_id)
+                words_with_more_than_5_chars = count_words_with_more_than_5_chars(post.content)
+                return Response({'words_with_5_chars_or_more': words_with_more_than_5_chars, 'post_content': post.content})
+            except Post.DoesNotExist:
+                return Response({'ErrorDetail': 'Post not found'}, status=404)
+        return Response({'ErrorDetail': 'Invalid request'}, status=400)
+
+def count_words_with_more_than_5_chars(post_content):
+    words = post_content.split()
+    count = sum(1 for word in words if len(word) > 5)
+    return count
+
+class SentimentCountView(APIView):
+    renderer_classes = (DefaultRenderer,)
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request):
+        post_id = request.data.get('post_id')
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return Response({'ErrorDetail': 'Post not found'}, status=404)
+        
+        total, sentiment_counts = count_sentiment_words(post.content)
+        
+        response_data = {
+            'post': post.content,
+            'total_sentiments': total,
+            'sentiment_counts': sentiment_counts
+        }
+        
+        return Response(response_data)
+
+def count_sentiment_words(post_content):
+    sentiment_words = {
+        'enojo': ['enojo', 'rabia', 'frustración', 'frustrado'],
+        'alegría': ['alegría', 'alegre', 'felicidad', 'entusiasmo'],
+        'duda': ['miedo', 'incertidumbre', 'preocupación', 'inseguridad']
     }
-    return render(request, 'feed/home.html', context)
+    
+    words = post_content.split()
+    count = 0
+    sentiment_counts = {sentiment: 0 for sentiment in sentiment_words}
+    
+    for word in words:
+        cleaned_word = remove_special_chars(word.lower())  # Aplicar limpieza a cada palabra
+        for sentiment, sentiment_word_list in sentiment_words.items():
+            if cleaned_word in sentiment_word_list:
+                if sentiment_counts[sentiment] == 0:
+                    count += 1
+                sentiment_counts[sentiment] += 1
+    
+    return count, sentiment_counts
+
+def remove_special_chars(word):
+    # Remover caracteres especiales utilizando expresiones regulares
+    cleaned_word = re.sub(r'[^\w\s]', '', word)
+    return cleaned_word
+
+class LoginViewSet(viewsets.ViewSet):
+    renderer_classes = (DefaultRenderer,)
+    @action(detail=False, methods=['post'])
+    def login(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        try:
+            user = User.objects.get(username=username, password=password)
+        except User.DoesNotExist:
+            return Response({'ErrorDetail': 'Invalid credentials'}, status=401)
+        
+        # Authentication successful
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+
+        return Response({'access_token': access_token})
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    renderer_classes = (DefaultRenderer,)
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    renderer_classes = (DefaultRenderer,)
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    renderer_classes = (DefaultRenderer,)
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
-@login_required(redirect_field_name='account_login')
-def post_view(request, pk):
-    context = {
-        "user_info": request.user,
-        "user_profile": UserProfile.objects.get(user=request.user),
-        "tweet": Post.objects.get(pk=pk),
-        "pk": pk,
-    }
-    return render(request, 'feed/post.html', context)
 
 
-@login_required(redirect_field_name='account_login')
-def user_view(request, user):
-    user = User.objects.get(username=user)
-    tweets = Post.objects.filter(author=user).order_by("-add_date")
-    paginator = Paginator(tweets, 3)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
 
-    context = {
-        "user_info": user,
-        "user_profile": UserProfile.objects.get(user=user),
-        "tweets": page_obj,
-        "following": len(Follow.objects.filter(user=request.user).filter(follow_user=user)),
-    }
-    return render(request, 'feed/user.html', context)
-
-
-@login_required(redirect_field_name='account_login')
-def settings_view(request):
-    user = request.user
-
-    if request.method == "POST":
-        if user.username != request.POST.get('username'):
-            if not len(User.objects.filter(username__exact=request.POST.get('username'))):
-                request.user.username = request.POST.get('username')
-
-        if user.email != request.POST.get('email'):
-            if not len(User.objects.filter(email__exact=request.POST.get('email'))):
-                request.user.email = request.POST.get('email')
-
-        if request.FILES:
-            UserProfile(avatar=request.FILES['avatar'], user=user).save()
-
-    user.profile.save()
-    user.save()
-    context = {
-        "user_info": user,
-        "user_profile": UserProfile.objects.get(user=user),
-
-    }
-    return render(request, 'feed/settings.html', context)
-
-
-@receiver(user_signed_up)
-def add_UserProfile(user, **kwargs):
-    profile = UserProfile(user=user)
-    profile.save()
-
-
-@login_required(redirect_field_name='account_login')
-def add_tweet(request):
-    tweet = Post(content=request.POST.get('content'), author=request.user)
-    tweet.save()
-    return redirect('home_view')
-
-
-@login_required(redirect_field_name='account_login')
-def add_comment(request, id):
-    comment = Comment(content=request.POST.get('content'), author=request.user, post=Post.objects.get(pk=id))
-    comment.save()
-
-    return redirect('post_view', pk=id)
-
-
-@login_required(redirect_field_name='account_login')
-def follow(request, followed, follower):
-    follower = User.objects.get(id=follower)
-    followed = User.objects.get(id=followed)
-
-    obj = Follow.objects.filter(user=follower).filter(follow_user=followed)
-    if obj:
-        obj.delete()
-    else:
-        Follow(user=follower, follow_user=followed).save()
-
-    return redirect('user_view', followed)
-
-
-@login_required(redirect_field_name='account_login')
-def search(request):
-    results = User.objects.filter(username__icontains=request.POST.get("search"))
-    context = {
-        "user_info": request.user,
-        "user_profile": UserProfile.objects.get(user=request.user),
-        "results": results,
-    }
-    return render(request, 'feed/results.html', context)
